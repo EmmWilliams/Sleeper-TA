@@ -15,9 +15,13 @@ public class Office {
 
         TA = new Assistant(students);
 
+        TA.start();
 
+        for(Student student : students) {
 
+            student.start();
 
+        }
 
     }
 
