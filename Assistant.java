@@ -3,22 +3,23 @@ import java.util.concurrent.Semaphore;
 
 public class Assistant extends Thread {
     
-    ArrayList<Student> students;
+    ArrayList<Student> wstudents;
     Thread t;
     Random rand = new Random();
-
+    boolean needed = true;
+  
     Assistant(ArrayList<Student> students) {
 
-        this.students = students;
+        this.wstudents = students;
 
     }
 
     public boolean anyStud() {
 
-        if (!students.isEmpty()) {
+        if (!wstudents.isEmpty()) {
             return true;
         }
-
+ 
         return false;
     }
 
@@ -45,7 +46,21 @@ public class Assistant extends Thread {
 
     public void run() {
 
-        
+        while (true) {
+
+            if (needed) {
+
+                
+
+            }
+            
+        }
+
+    }
+
+    public void setNeed (boolean isit) {
+
+        this.needed = isit;
 
     }
 }
