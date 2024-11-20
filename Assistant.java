@@ -3,31 +3,28 @@ import java.util.concurrent.Semaphore;
 
 public class Assistant extends Thread {
     
-    ArrayList<Student> wstudents;
+
     Thread t;
     Random rand = new Random();
-    boolean needed = true;
+    public Semaphore sleeping = new Semaphore(1);
+    public Semaphore needed = new Semaphore(0);
+    public Semaphore chair = new Semaphore(3);
+
   
-    Assistant(ArrayList<Student> students) {
+    Assistant() {
 
-        this.wstudents = students;
+
 
     }
 
-    public boolean anyStud() {
 
-        if (!wstudents.isEmpty()) {
-            return true;
-        }
- 
-        return false;
-    }
-
-    public void helpStud(int studentNum) {
+    public void helpStud() {
 
         try {
             int thing = rand.nextInt(1000, 3000);
             t.sleep(thing);
+            System.out.println("Done helping in TA"); 
+            chair.release();
         }
         
         catch (InterruptedException e) {
@@ -38,29 +35,20 @@ public class Assistant extends Thread {
 
     }
 
-    public void goSleep() {
-
-
-
-    }
 
     public void run() {
 
         while (true) {
-
-            if (needed) {
-
-                
-
-            }
             
+            if (needed.availablePermits() == 0) {
+            System.out.println("Will sleep until there is student.");
+            sleeping.release();
+            }
+            System.out.println("Helping in TA"); 
+            helpStud(); 
+
         }
 
     }
 
-    public void setNeed (boolean isit) {
-
-        this.needed = isit;
-
-    }
 }
