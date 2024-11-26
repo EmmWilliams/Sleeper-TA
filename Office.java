@@ -6,9 +6,7 @@ public class Office {
         
         int numStud = 5; // Change to ask user at some point ||||||||||!
         ArrayList<Student> students = new ArrayList<>();
-        Assistant TA;
-
-        TA = new Assistant();
+        Assistant TA = new Assistant();
 
         TA.start();
 
@@ -21,7 +19,5 @@ public class Office {
         }
 
     }
-
-
   
 }
