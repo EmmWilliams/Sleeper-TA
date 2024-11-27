@@ -1,14 +1,16 @@
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Student extends Thread {
     
-    int studentNum;
-    Thread t;
-    Random rand = new Random();
-    Assistant TA;
+    private int studentNum;
+    private Thread t;
+    private Random rand = new Random();
+    private Assistant TA;
     Lock lock = new ReentrantLock();
+    private boolean isWaiting;
 
     Student (int studNum, Assistant teachAssistant) {
 
@@ -34,11 +36,16 @@ public class Student extends Thread {
     
     private void requestHelp() {
         //lock.lock();
+        if (isWaiting) {
+            return; // Prevent multiple requests while waiting for help
+        }
         try {
+
+
             if (TA.chair.tryAcquire()) {
                 
                 System.out.println("Student " + studentNum + " got a seat");
-                
+                TA.setStudID(studentNum);
                 TA.needed.release();
 
                 if (TA.needed.availablePermits() == 0) {
@@ -46,19 +53,19 @@ public class Student extends Thread {
                 }
 
                 TA.helping.acquire();
-                System.out.println("Student " + studentNum + " got help");
                 TA.chair.release();
             }
             else {
                 System.out.println("Not available rn, student " + studentNum + " will be returning later");
             }
         } 
-        //finally {
-           // lock.unlock();
-        //}
+        
         catch (InterruptedException e ) {
             System.out.println("Alas you beefed it!");
         }
+        finally {
+            isWaiting = false;
+         }
     }
 
     public void run() {

@@ -4,7 +4,7 @@ public class Office {
     
     public static void main(String[] args) { 
         
-        int numStud = 5; // Change to ask user at some point ||||||||||!
+        int numStud = 3; // Change to ask user at some point ||||||||||!
         ArrayList<Student> students = new ArrayList<>();
         Assistant TA = new Assistant();
 
