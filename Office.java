@@ -1,12 +1,19 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class Office {
     
     public static void main(String[] args) { 
         
-        int numStud = 5; // Change to ask user at some point ||||||||||!
+
+        int numStud;
         ArrayList<Student> students = new ArrayList<>();
         Assistant TA = new Assistant();
+        Scanner s = new Scanner(System.in);
+
+
+        System.out.println("This is an example for the Sleeping TA Problem - \nPlease enter number students you have (ex. '1,' '5,' or '10'): ");
+        numStud = s.nextInt();
+        s.close();
 
         TA.start();
 
