@@ -24,7 +24,7 @@ public class Assistant extends Thread {
             int thing = rand.nextInt(1000, 3000);
             t.sleep(thing);
             helping.release();
-            System.out.println("Done helping " + studID + " in TA"); 
+            //System.out.println("Done helping " + studID + " in TA"); 
         }
         
         catch (InterruptedException e) {
@@ -48,7 +48,7 @@ public class Assistant extends Thread {
             
             needed.acquire();
             int studentID = getStudID();
-            System.out.println("Helping " + studID + " in TA"); 
+            //System.out.println("Helping " + studID + " in TA"); 
             //lock.lock();
             
             // try {

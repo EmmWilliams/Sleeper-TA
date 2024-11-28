@@ -41,19 +41,24 @@ public class Student extends Thread {
         }
         try {
 
-
-            if (TA.chair.tryAcquire()) {
-                
-                System.out.println("Student " + studentNum + " got a seat");
-                TA.setStudID(studentNum);
+            if (TA.chair.availablePermits() == 3 && TA.helping.availablePermits() == 1) {
+                System.out.println("Student " + studentNum + " woke TA up");
+                TA.setStudID(studentNum); // Set the current student ID
                 TA.needed.release();
-
-                if (TA.needed.availablePermits() == 0) {
-                System.out.println("Student " + studentNum + " woke TA up"); 
-                }
-
+                TA.chair.release();
+                TA.helping.acquire();
+                System.out.println("Student " + studentNum + " got help");
+            }
+            
+            if (TA.chair.tryAcquire()) {
+                TA.setStudID(studentNum);
+                System.out.println("Student " + studentNum + " got a seat");
+                
+                TA.needed.release();
+                
                 TA.helping.acquire();
                 TA.chair.release();
+                System.out.println("Student " + studentNum + " got help");
             }
             else {
                 System.out.println("Not available rn, student " + studentNum + " will be returning later");
@@ -75,6 +80,7 @@ public class Student extends Thread {
 
             study();
             requestHelp();
+            
 
         }
 
